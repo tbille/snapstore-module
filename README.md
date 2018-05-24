@@ -1,0 +1,1 @@
+# Snapstore module
