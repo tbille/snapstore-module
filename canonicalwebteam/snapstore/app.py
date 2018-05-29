@@ -3,6 +3,7 @@ import talisker.flask
 from canonicalwebteam.snapstore.store import store_views
 
 
+print ("############################################################################")
 def create_app():
     app = flask.Flask(__name__)
     app.register_blueprint(store_views)
