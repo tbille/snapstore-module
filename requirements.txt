@@ -1,0 +1,3 @@
+Flask
+talisker
+raven[flask]==6.5.0

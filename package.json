@@ -1,9 +1,10 @@
 {
   "scripts": {
+    "serve": "talisker.gunicorn canonicalwebteam.snapstore.app:create_app\\(\\) --reload --log-level debug --timeout 9999 --access-logfile - --error-logfile - --bind 0.0.0.0:${PORT}",
     "clean": "rm -rf node_modules yarn-error.log css static/css *.log *.sqlite _site/ build/ .jekyll-metadata .bundle",
     "watch": "watch -p 'static/sass/**/*.scss' -c 'yarn run build'",
-    "build": "node-sass --include-path node_modules static/sass --output static/css && postcss --use autoprefixer --replace 'static/css/**/*.css' && postcss --use cssnano --dir static/minified 'static/css/**/*.css'",
-    "test": "sass-lint static/**/*.scss --verbose --no-exit"
+    "build": "",
+    "test": "flake8 --exclude '*env*,node_modules,bin,lib,include'"
   },
   "dependencies": {
     "autoprefixer": "^6.3.1",
