@@ -1,0 +1,177 @@
+@mixin snapcraft-details-heading {
+  $color-drawer-overlay: rgba(0, 0, 0, .2);
+
+  .p-code-snippet__input {
+    padding-right: 40px;
+  }
+
+  .p-snap-heading {
+    display: flex;
+
+
+    &__icon {
+      align-self: flex-start;
+      flex-shrink: 0;
+      margin-right: $sp-medium;
+      max-height: 3.75rem;
+      max-width: 3.75rem;
+      vertical-align: middle;
+      width: auto;
+    }
+
+    &__title {
+      flex-grow: 1;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    &__name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &__publisher {
+      margin-top: $sp-x-small;
+    }
+
+    @media screen and (min-width: $breakpoint-medium) {
+      flex-direction: column;
+
+      &__title {
+        margin-top: $sp-x-small;
+      }
+    }
+  }
+
+  .p-snap-install-buttons {
+    margin-top: 68px; // align with snap name (60px icon + 8px margin)
+    text-align: right;
+  }
+
+  .p-view-store-button,
+  .p-cli-install {
+    margin-top: $sp-x-small;
+  }
+
+  .p-channel-map {
+    box-shadow: 0 1px 5px 1px transparentize($color-x-dark, .8);
+    left: 0;
+    padding-top: $sp-medium;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: translateY(57px); // just under the header (mobile)
+    transition: transform 500ms;
+    z-index: 10;
+
+    @media screen and (min-width: $breakpoint-medium) {
+      transform: translateY(48px); // just under the header (desktop)
+    }
+
+    &.is-closed {
+      transform: translateY(-1111px); // should be high enough to hide it on mobile
+    }
+
+    &__row {
+      // TODO WHY NOT COMPILING!!!!!!
+      @extend %clearfix;
+      margin: 0;
+      padding-bottom: $sp-x-large;
+
+      // hide install instructions when no release in channel
+      &--closed {
+        .p-code-snippet {
+          display: none;
+        }
+      }
+
+      &--heading {
+        padding-bottom: $sp-small;
+        padding-top: 0;
+
+        @media screen and (max-width: $breakpoint-medium) {
+          display: none;
+        }
+      }
+    }
+
+    // align track select with candidate input
+    &__track-field {
+      margin-top: $sp-large;
+    }
+
+    &__channel-name {
+      display: inline-block;
+      font-weight: 400;
+      padding-top: $sp-x-small;
+    }
+
+    .p-tabs {
+      background: transparent; // remove default white background
+      border-bottom: 1px solid $color-mid-light;
+      position: relative; // for close button;
+
+      &::before {
+        display: none; // hide mobile arror thingy
+      }
+
+      .p-tabs__list {
+        padding: 0; // remove left padding
+      }
+    }
+
+    &__hide {
+      background-color: transparent;
+      background-size: $sp-medium $sp-medium;
+      border: 0;
+      padding: $sp-small;
+      position: absolute;
+      right: $sp-small;
+      top: $sp-small;
+    }
+  }
+
+  .p-channel-map__tab {
+    display: none;
+
+    &.is-open {
+      display: block;
+    }
+  }
+
+  .p-channel-map-overlay {
+    background: $color-drawer-overlay;
+    bottom: 0;
+    height: auto;
+    left: 0;
+    margin-top: 0;
+    opacity: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: fixed;
+    top: 0;
+    transition: opacity 500ms;
+    width: 100%;
+    z-index: 4;
+
+    .is-closed + & {
+      opacity: 0;
+    }
+  }
+
+  // because of Vanilla `* + *` top margin
+  .p-tooltip__message {
+    margin: 0;
+  }
+
+  // positioning fixes for track tooltip
+  .p-tooltip.is-icon {
+    .p-tooltip__message {
+      left: -3rem; // position in bottom-left under the label and icon
+
+      &::before {
+        left: 3rem; // reposition arrow correctly under the icon
+      }
+    }
+  }
+}

@@ -1,0 +1,61 @@
+// colour definitions
+$color-brand: #00302f; // TODO: this is a temprary brand colour
+$color-accent: $color-brand;
+$color-navigation-background: #252525;
+
+// vanilla patterns
+@import 'vanilla-framework/scss/vanilla';
+
+@include vf-base;
+
+@include vf-p-card; // required by vf-p-tooltips
+@include vf-p-divider;
+@include vf-p-links;
+@include vf-p-lists;
+@include vf-p-grid;
+@include vf-p-grid-modifications;
+@include vf-p-buttons;
+@include vf-p-strip;
+@include vf-p-muted-heading;
+@include vf-p-navigation;
+@include vf-p-notification;
+@include vf-p-footer;
+@include vf-p-tooltips;
+@include vf-p-forms;
+@include vf-p-form-help-text;
+@include vf-p-headings;
+@include vf-p-matrix;
+@include vf-p-icons;
+@include vf-p-heading-icon;
+@include vf-u-image-position;
+@include vf-p-code-snippet;
+@include vf-p-form-validation;
+@include vf-p-contextual-menu;
+
+// vanilla utilities
+@include vf-u-floats;
+@include vf-u-off-screen;
+@include vf-u-margin-collapse;
+@include vf-u-padding-collapse;
+@include vf-u-vertically-center;
+@include vf-u-align;
+@include vf-u-clearfix;
+@include vf-u-animations;
+
+@import 'patterns_maas_modal';
+@include maas-p-modal;
+
+@import 'map';
+@include snap-details-map;
+
+@import 'snapcraft_details_heading';
+@include snapcraft-details-heading;
+
+@import 'snapcraft_details_screenshots';
+@include snapcraft-details-screenshots;
+
+@import 'snapcraft_snap-details';
+@include snapcraft-snap-details;
+
+@import 'snapcraft_distro-chart';
+@include snapcraft-distro-chart;

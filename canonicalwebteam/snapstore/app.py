@@ -1,5 +1,6 @@
 import flask
 import talisker.flask
+import canonicalwebteam.snapstore.helpers as helpers
 from canonicalwebteam.snapstore.store import store_views
 
 

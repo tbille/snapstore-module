@@ -1,3 +1,6 @@
-Flask
-talisker
+bleach==2.0.0
+canonicalwebteam.snapstoreapi==0.4.4
+Flask==1.0.2
+humanize==0.5.1
 raven[flask]==6.5.0
+talisker==0.9.8
