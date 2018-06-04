@@ -12,6 +12,9 @@ setup(
         'canonicalwebteam.snapstore',
     ],
     install_requires=[
-        'canonicalwebteam.snapstoreapi',
+        'bleach==2.0.0',
+        'canonicalwebteam.snapstoreapi==0.4.4',
+        'Flask==1.0.2',
+        'humanize==0.5.1',
     ],
 )
