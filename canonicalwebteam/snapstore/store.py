@@ -1,4 +1,3 @@
-import os
 import flask
 import humanize
 from dateutil import parser
@@ -27,6 +26,27 @@ store_views = flask.Blueprint(
     'store_views', __name__, template_folder='templates')
 
 store_views.add_app_url_map_converter(helpers.RegexConverter, 'regex')
+
+
+def _handle_errors(api_error: ApiError):
+    status_code = 502
+    error = {
+        'message': str(api_error)
+    }
+
+    if type(api_error) is ApiTimeoutError:
+        status_code = 504
+    elif type(api_error) is ApiResponseDecodeError:
+        status_code = 502
+    elif type(api_error) is ApiResponseErrorList:
+        error['errors'] = api_error.errors
+        status_code = 502
+    elif type(api_error) is ApiResponseError:
+        status_code = 502
+    elif type(api_error) is ApiConnectionError:
+        status_code = 502
+
+    return status_code, error
 
 
 @store_views.context_processor

@@ -1,5 +1,6 @@
 import bleach
 import re
+from urllib.parse import urlparse
 
 
 def get_default_channel(snap_name):
