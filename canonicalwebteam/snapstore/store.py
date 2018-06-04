@@ -19,22 +19,8 @@ from canonicalwebteam.snapstoreapi.exceptions import (
     ApiConnectionError
 )
 
-# This code comes from here
-# https://coderwall.com/p/gnafxa/adding-custom-url-map-converters-to-flask-blueprint-objects
-def add_app_url_map_converter(self, func, name=None):
-    """
-    Register a custom URL map converters, available application wide.
-
-    :param name: the optional name of the filter, otherwise the function name
-                 will be used.
-    """
-    def register_converter(state):
-        state.app.url_map.converters[name or func.__name__] = func
-
-    self.record_once(register_converter)
-
 # monkey-patch the Blueprint object to allow addition of URL map converters
-flask.Blueprint.add_app_url_map_converter = add_app_url_map_converter
+flask.Blueprint.add_app_url_map_converter = helpers.add_app_url_map_converter
 
 # register the URL map converters that are required
 store_views = flask.Blueprint(
@@ -43,10 +29,23 @@ store_views = flask.Blueprint(
 store_views.add_app_url_map_converter(helpers.RegexConverter, 'regex')
 
 
+@store_views.context_processor
+def utility_processor():
+    """
+    This defines the set of properties and functions that will be added
+    to the default context for processing templates. All these items
+    can be used in all templates
+    """
+    return {
+        'static_url': helpers.static_url,
+    }
+
+
 @store_views.route('/')
 def home():
     return flask.render_template(
         'index.html')
+
 
 @store_views.route('/<regex("[a-z0-9-]*[a-z][a-z0-9-]*"):snap_name>')
 def snap_details(snap_name):
@@ -176,40 +175,3 @@ def snap_details(snap_name):
         'snap-details.html',
         **context
     ), status_code
-
-
-@store_views.context_processor
-def utility_processor():
-    """
-    This defines the set of properties and functions that will be added
-    to the default context for processing templates. All these items
-    can be used in all templates
-    """
-    return {
-        'static_url': static_url,
-    }
-
-
-def static_url(filename):
-    """
-    Template function for generating URLs to static assets:
-    Given the path for a static file, output a url path
-    with a hex hash as a query string for versioning
-    """
-
-    filepath = os.path.join('static', filename)
-    url = '/' + filepath
-
-    if not os.path.isfile(filepath):
-        print('Could not find static file: ' + filepath)
-        return url
-
-    # Use MD5 as we care about speed a lot
-    # and not security in this case
-    file_hash = hashlib.md5()
-    with open(filepath, "rb") as file_contents:
-        for chunk in iter(lambda: file_contents.read(4096), b""):
-            file_hash.update(chunk)
-
-    return url + '?v=' + file_hash.hexdigest()[:7]
-
